@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>_Dev Lee - Full Stack Developer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #28a745;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+
+    /* hidden initially */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Projects grid container */
+#projects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  align-items: stretch;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Card */
+.project-card {
+  /* background: #ffffff; */
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  min-height: 100%;
+}
+
+/* Hover lift */
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.12);
+}
+
+/* Image area */
+.project-image {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: #f2f4f8;
+  display: block;
+  overflow: hidden;
+}
+
+/* Actual image */
+.project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder when no image */
+.image-placeholder {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+  font-size: 34px;
+}
+
+/* Overlay that appears on hover */
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: background-color 220ms ease, opacity 220ms ease;
+  background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.45) 100%);
+  opacity: 0;
+}
+
+/* Show overlay on hover or focus of the card */
+.project-card:hover .project-overlay,
+.project-card:focus-within .project-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Container for link icons */
+.project-links {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Individual link buttons */
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.12);
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 160ms ease, transform 160ms ease;
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 16px;
+}
+
+/* Hover/focus states for link buttons */
+.project-link:hover,
+.project-link:focus {
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-2px);
+  outline: none;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.18);
+}
+
+/* Make icons inside accessible */
+.project-link i {
+  display: inline-block;
+  line-height: 1;
+}
+
+/* Content area (title, description, tech tags) */
+.project-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+}
+
+/* Title */
+.project-content h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: white;
+  font-weight: 600;
+}
+
+/* Description */
+.project-content p {
+  margin: 0;
+  color: #fff;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Tech tags container */
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto; /* keep tags at the bottom if space allows */
+}
+
+/* Individual tag */
+.tech-tag {
+  display: inline-block;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.78rem;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  border: 2px solid #10b981;
+  white-space: nowrap;
+}
+
+/* Responsive tweaks */
+@media (max-width: 520px) {
+  .project-image { height: 150px; }
+  .project-link { width: 40px; height: 40px; font-size: 14px; }
+  .project-content { padding: 0.9rem; }
+}
+
+/* Utility: empty / error states */
+.no-projects,
+.error {
+  color: #64748b;
+  text-align: center;
+  padding: 1.25rem;
+}
+
+</style>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text p-4">_Dev</span>
+                <div class="logo-pulse"></div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="greeting">
+                        <span class="wave">👋</span>
+                        <span>Hello, I'm</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="name-text">_Dev Lee</span>
+                        <div class="title-animation">
+                            <span class="typing-text"></span>
+                            <span class="cursor">|</span>
+                        </div>
+                    </h1>
+                    <p class="hero-description">
+                        I craft digital experiences that blend creativity with cutting-edge technology. 
+                        Specializing in full-stack development with a passion for clean code and innovative solutions.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">
+                            <span>View My Work</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a  href="./myCV.docx" id="downloadCV" class="btn btn-secondary">
+                            <i class="fas fa-download"></i>
+                            <span>Download CV</span>
+                        </a>
+                        
+
+                    </div>
+                    <div class="toast position-fixed bottom-0 end-0 p-3 d-none"
+                        id="downloadToast"
+                        role="alert">
+                        <div class="toast-body bg-success text-white">
+                            CV download started successfully 📄
+                        </div>
+                    </div>
+                    <script>
+                    const downloadBtn = document.getElementById("downloadCV");
+                    const toast = document.getElementById("downloadToast");
+
+                    downloadBtn.addEventListener("click", () => {
+                        // show toast
+                        toast.classList.add("show");
+
+                        // hide after 5 seconds
+                        setTimeout(() => {
+                            toast.classList.remove("show");
+                        }, 5000);
+                    });
+                    </script>
+
+                    <div class="social-links">
+                        <a href="https://github.com/Efejedia" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="profile-container">
+                        <div class="profile-image">
+                            <div class="image-placeholder">
+                                <img src="./devlee.jpg" style="width: 100%;" alt="">
+                            </div>
+                            <div class="profile-ring"></div>
+                            <div class="profile-dots">
+                                <div class="dot dot-1"></div>
+                                <div class="dot dot-2"></div>
+                                <div class="dot dot-3"></div>
+                                <div class="dot dot-4"></div>
+                            </div>
+                        </div>
+                        <div class="floating-cards">
+                            <div class="card card-1">
+                                <i class="fab fa-react"></i>
+                                <span>React</span>
+                            </div>
+                            <div class="card card-2">
+                                <i class="fab fa-node-js"></i>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="card card-3">
+                                <i class="fas fa-database"></i>
+                                <span>Database</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                <span>Scroll Down</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title">About Me</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="text-reveal">
+                        <p>
+                            I'm a passionate full-stack developer with <span id="experience" class="experience-badge" data-start="2022">—</span> years of experience creating 
+                            digital solutions that make a difference. My journey began with curiosity 
+                            about how things work on the web, and it has evolved into a deep love for 
+                            crafting exceptional user experiences.
+                        </p>
+                        <p>
+                            I specialize in modern web technologies including React, Node.js, PHP, 
+                            and cloud platforms. I believe in writing clean, maintainable code and 
+                            staying up-to-date with the latest industry trends and best practices.
+                        </p>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="50">0</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="3">0</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="25">0</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <div class="window-controls">
+                                <span class="control close"></span>
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                            </div>
+                            <span class="window-title">developer.js</span>
+                        </div>
+                        <div class="code-content">
+                            <div class="code-line">
+                                <span class="line-number">1</span>
+                                <span class="code-text">
+                                    <span class="keyword">const</span> 
+                                    <span class="variable">developer</span> = {
+                                </span>
+                            </div>
+                            <div class="code-line">
+                                <span class="line-number">2</span>
+                                <span class="code-text">
+                                    &nbsp;&nbsp;<span class="property">name</span>: 
+                                    <span class="string">'_Dev Lee'</span>,
+                                </span>
+                            </div>
+                            <div class="code-line">
+                                <span class="line-number">3</span>
+                                <span class="code-text">
+                                    &nbsp;&nbsp;<span class="property">skills</span>: [
+                                    <span class="string">'React'</span>, 
+                                    <span class="string">'Node.js'</span>
+                                    <span class="string">'PHP'</span>],
+                                </span>
+                            </div>
+                            <div class="code-line">
+                                <span class="line-number">4</span>
+                                <span class="code-text">
+                                    &nbsp;&nbsp;<span class="property">passion</span>: 
+                                    <span class="string">'Creating amazing UX'</span>
+                                </span>
+                            </div>
+                            <div class="code-line">
+                                <span class="line-number">5</span>
+                                <span class="code-text">};</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">Skills & Technologies</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-content">
+                <div class="skills-categories">
+                    <div class="skill-category">
+                        <h3>Frontend</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-react"></i>
+                                </div>
+                                <span>React</span>
+                                <div class="skill-level" data-level="95"></div>
+                            </div>
+                            
+                             <div class="skill-item"> 
+                                 <div class="skill-icon"> 
+                                     <i class="fab fa-js"></i> 
+                                </div>
+                                <span>JavaScript</span>
+                                <div class="skill-level" data-level="90"></div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-css3-alt"></i>
+                                </div>
+                                <span>CSS3</span>
+                                <div class="skill-level" data-level="88"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Backend</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-php"></i>
+                                </div>
+                                <span>PHP</span>
+                                <div class="skill-level" data-level="92"></div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-node-js"></i>
+                                </div>
+                                <span>Node.js</span>
+                                <div class="skill-level" data-level="92"></div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <span>MongoDB</span>
+                                <div class="skill-level" data-level="85"></div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <span>MYSQL</span>
+                                <div class="skill-level" data-level="80"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Tools & Cloud</h3>
+                        <div class="skill-items">
+                            <!-- <div class="skill-item"> -->
+                                <!-- <div class="skill-icon"> -->
+                                    <!-- <i class="fab fa-aws"></i> -->
+                                <!-- </div> -->
+                                <!-- <span>AWS</span> -->
+                                <!-- <div class="skill-level" data-level="83"></div> -->
+                            <!-- </div> -->
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-docker"></i>
+                                </div>
+                                <span>Docker</span>
+                                <div class="skill-level" data-level="78"></div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-git-alt"></i>
+                                </div>
+                                <span>Git</span>
+                                <div class="skill-level" data-level="90"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="project-card" id="projects-container">
+                <!-- <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> -->
+                     <!-- Projects will be injected here -->
+                <!-- </div> -->
+
+
+
+                <!-- Include Font Awesome for icons -->
+                <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title">Let's Work Together</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>
+                        I'm always interested in new opportunities and exciting projects. 
+                        Whether you have a question or just want to say hi, feel free to reach out!
+                    </p>
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value">mefejedia@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Phone</span>
+                                <span class="contact-value">+234 8163259860</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <span class="contact-label">Location</span>
+                                <span class="contact-value">Port Harcourt, Nigeria</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form class="form"  data-api-endpoint="http://localhost/portfolioAdmin/v1/api/message-logic.php" data-api-content-type="json" data-api-credentials="false">
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder="Your Name" required>
+                            <label class="form-label">Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" placeholder="Your Email" required>
+                            <label class="form-label">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder="Subject" required>
+                            <label class="form-label">Subject</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-input" placeholder="Your Message" rows="5" required></textarea>
+                            <label class="form-label">Message</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2024 _Dev Lee Chen. All rights reserved.</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-dribbble"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+    <script src="./fetch.js"></script>
+    <script>
+        (function () {
+  // Default API URL — replace with your API host if you don't use data-api-endpoint on the form
+  const defaultApiUrl = 'http://localhost/portfolioAdmin/v1/api/message-logic.php';
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('.form');
+    if (!form) return;
+
+    const apiUrl = form.dataset.apiEndpoint || defaultApiUrl;
+    const contentTypeMode = (form.dataset.apiContentType || 'json').toLowerCase(); // 'json' or 'form'
+    const useCredentials = form.dataset.apiCredentials === 'true'; // whether to send cookies
+
+    // status element (create if missing)
+    let statusEl = form.querySelector('.form-status');
+    if (!statusEl) {
+      statusEl = document.createElement('div');
+      statusEl.className = 'form-status';
+      statusEl.setAttribute('aria-live', 'polite');
+      statusEl.style.marginTop = '.75rem';
+      form.appendChild(statusEl);
+    }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      statusEl.textContent = '';
+      statusEl.style.color = '';
+
+      // Grab inputs by their order in your markup (do NOT require name attributes)
+      const groups = Array.from(form.querySelectorAll('.form-group'));
+      const inputs = groups.map(g => g.querySelector('.form-input')).filter(Boolean);
+
+      // Map inputs to the API field names expected: full_name, email, subject, details
+      const payload = {
+        full_name: (inputs[0] && inputs[0].value || '').trim(),
+        email:      (inputs[1] && inputs[1].value || '').trim(),
+        subject:    (inputs[2] && inputs[2].value || '').trim(),
+        details:    (inputs[3] && inputs[3].value || '').trim()
+      };
+
+      // Basic client validation
+      if (!payload.full_name || !payload.email || !payload.details) {
+        statusEl.style.color = 'crimson';
+        statusEl.textContent = 'Please fill in name, email and message.';
+        return;
+      }
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(payload.email)) {
+        statusEl.style.color = 'crimson';
+        statusEl.textContent = 'Please enter a valid email.';
+        return;
+      }
+
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        let fetchOptions = {
+          method: 'POST',
+          headers: {},
+          credentials: useCredentials ? 'include' : 'omit'
+        };
+
+        if (contentTypeMode === 'form') {
+          const urlParams = new URLSearchParams();
+          urlParams.set('full_name', payload.full_name);
+          urlParams.set('email', payload.email);
+          urlParams.set('subject', payload.subject);
+          urlParams.set('details', payload.details);
+          fetchOptions.body = urlParams.toString();
+          fetchOptions.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        } else {
+          // default: JSON
+          fetchOptions.body = JSON.stringify(payload);
+          fetchOptions.headers['Content-Type'] = 'application/json;charset=UTF-8';
+        }
+
+        const res = await fetch(apiUrl, fetchOptions);
+
+        // Try parse JSON response
+        let json;
+        const ct = res.headers.get('content-type') || '';
+        if (ct.indexOf('application/json') !== -1) {
+          json = await res.json();
+        } else {
+          const text = await res.text();
+          try { json = JSON.parse(text); } catch { json = { status: res.ok ? 'success' : 'error', message: text || res.statusText }; }
+        }
+
+        if (res.ok && json && json.status === 'success') {
+          statusEl.style.color = 'green';
+          statusEl.textContent = json.message || 'Message sent. Thank you!';
+          form.reset();
+        } else {
+          statusEl.style.color = 'crimson';
+          statusEl.textContent = (json && json.message) ? json.message : `Failed to send message. (${res.status})`;
+        }
+      } catch (err) {
+        console.error('Contact API error:', err);
+        statusEl.style.color = 'crimson';
+        statusEl.textContent = 'Network error. Please try again later.';
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  });
+})();
+    </script>
+</body>
+</html>
