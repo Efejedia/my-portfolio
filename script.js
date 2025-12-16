@@ -42,7 +42,8 @@ if (el) {
 // Typing Animation
 const typingTexts = [
     'Full Stack Developer',
-    'React Specialist',
+    'Mobile Developer',
+    'Web3 enthusiast',
     'PHP Specialist',
     'Node.js Expert',
     'Problem Solver'

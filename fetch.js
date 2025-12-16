@@ -1,6 +1,6 @@
 // fetch-projects.js
-const apiUrl = "http://localhost/portfolioAdmin/v1/api/fetch-project.php";
-const imgBaseUrl = "http://localhost/portfolioAdmin/uploaded_img/";
+const apiUrl = "https://portfolio.elitedestrading.com/v1/api/fetch-project.php";
+const imgBaseUrl = "https://portfolio.elitedestrading.com/uploaded_img/";
 
 /**
  * Normalize a tech field into an array of tag strings.
@@ -171,12 +171,78 @@ if (document.readyState === "loading") {
 
 // contact us js
 
-// contact-api.js
-// Usage:
-// 1) Add <script src="/js/contact-api.js"></script> after your form.
-// 2) Optionally set the API endpoint in the form element:
-//      <form class="form" data-api-endpoint="https://api.example.com/contact.php" data-api-content-type="json" data-api-credentials="false">...</form>
-//    - data-api-content-type: "json" (default) or "form" (application/x-www-form-urlencoded)
-//    - data-api-credentials: "true" to send cookies (use only if API supports credentials/CORS)
-// 3) Or edit the apiUrl variable below.
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.querySelector('.form');
+  if (!form) return;
+
+  const apiUrl = form.dataset.apiEndpoint;
+
+  // Status element
+  let statusEl = document.createElement('div');
+  statusEl.className = 'form-status';
+  statusEl.setAttribute('aria-live', 'polite');
+  statusEl.style.marginTop = '0.75rem';
+  form.appendChild(statusEl);
+
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    statusEl.textContent = '';
+    statusEl.style.color = '';
+
+    // Collect form data
+    const payload = {
+      full_name: form.full_name.value.trim(),
+      email: form.email.value.trim(),
+      subject: form.subject.value.trim(),
+      details: form.details.value.trim()
+    };
+
+    // Validation
+    if (!payload.full_name || !payload.email || !payload.details) {
+      statusEl.textContent = 'Please fill in name, email and message.';
+      statusEl.style.color = 'crimson';
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+      statusEl.textContent = 'Invalid email address.';
+      statusEl.style.color = 'crimson';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const json = await res.json();
+
+      if (res.ok && json.status === 'success') {
+        statusEl.textContent = json.message || 'Message sent successfully.';
+        statusEl.style.color = 'green';
+        form.reset();
+      } else {
+        statusEl.textContent = json.message || 'Failed to send message.';
+        statusEl.style.color = 'crimson';
+      }
+    } catch (err) {
+      statusEl.textContent = 'Network error. Please try again.';
+      statusEl.style.color = 'crimson';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>Send Message</span> <i class="fas fa-paper-plane"></i>';
+    }
+  });
+});
+
 
