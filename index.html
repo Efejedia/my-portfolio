@@ -1,220 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>_Dev Lee - Full Stack Developer Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" href="./devlee.jpg"> ✅
 
 </head>
 <style>
     .toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #28a745;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 6px;
-    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #28a745;
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 6px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, .2);
 
-    /* hidden initially */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
-    transition: opacity .3s ease, transform .3s ease;
-}
+        /* hidden initially */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: opacity .3s ease, transform .3s ease;
+    }
 
-.toast.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
+    .toast.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
 
-/* Projects grid container */
-#projects-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-  align-items: stretch;
-  margin: 0 auto;
-  padding: 1rem;
-  box-sizing: border-box;
-}
+    /* Projects grid container */
+    #projects-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        align-items: stretch;
+        margin: 0 auto;
+        padding: 1rem;
+        box-sizing: border-box;
+    }
 
-/* Card */
-.project-card {
-  /* background: #ffffff; */
-  color: white;
-  border-radius: 10px;
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 220ms ease, box-shadow 220ms ease;
-  min-height: 100%;
-}
+    /* Card */
+    .project-card {
+        /* background: #ffffff; */
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 220ms ease, box-shadow 220ms ease;
+        min-height: 100%;
+    }
 
-/* Hover lift */
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.12);
-}
+    /* Hover lift */
+    .project-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 42px rgba(15, 23, 42, 0.12);
+    }
 
-/* Image area */
-.project-image {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  background: #f2f4f8;
-  display: block;
-  overflow: hidden;
-}
+    /* Image area */
+    .project-image {
+        position: relative;
+        width: 100%;
+        height: 180px;
+        background: #f2f4f8;
+        display: block;
+        overflow: hidden;
+    }
 
-/* Actual image */
-.project-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+    /* Actual image */
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
 
-/* Placeholder when no image */
-.image-placeholder {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
-  font-size: 34px;
-}
+    /* Placeholder when no image */
+    .image-placeholder {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        background: linear-gradient(135deg, #6b7280 0%, #374151 100%);
+        font-size: 34px;
+    }
 
-/* Overlay that appears on hover */
-.project-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transition: background-color 220ms ease, opacity 220ms ease;
-  background: linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.45) 100%);
-  opacity: 0;
-}
+    /* Overlay that appears on hover */
+    .project-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        transition: background-color 220ms ease, opacity 220ms ease;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.45) 100%);
+        opacity: 0;
+    }
 
-/* Show overlay on hover or focus of the card */
-.project-card:hover .project-overlay,
-.project-card:focus-within .project-overlay {
-  opacity: 1;
-  pointer-events: auto;
-}
+    /* Show overlay on hover or focus of the card */
+    .project-card:hover .project-overlay,
+    .project-card:focus-within .project-overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
 
-/* Container for link icons */
-.project-links {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
+    /* Container for link icons */
+    .project-links {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
 
-/* Individual link buttons */
-.project-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.12);
-  color: #ffffff;
-  text-decoration: none;
-  transition: background-color 160ms ease, transform 160ms ease;
-  border: 1px solid rgba(255,255,255,0.06);
-  font-size: 16px;
-}
+    /* Individual link buttons */
+    .project-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        text-decoration: none;
+        transition: background-color 160ms ease, transform 160ms ease;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        font-size: 16px;
+    }
 
-/* Hover/focus states for link buttons */
-.project-link:hover,
-.project-link:focus {
-  background: rgba(255,255,255,0.18);
-  transform: translateY(-2px);
-  outline: none;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.18);
-}
+    /* Hover/focus states for link buttons */
+    .project-link:hover,
+    .project-link:focus {
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateY(-2px);
+        outline: none;
+        box-shadow: 0 6px 18px rgba(2, 6, 23, 0.18);
+    }
 
-/* Make icons inside accessible */
-.project-link i {
-  display: inline-block;
-  line-height: 1;
-}
+    /* Make icons inside accessible */
+    .project-link i {
+        display: inline-block;
+        line-height: 1;
+    }
 
-/* Content area (title, description, tech tags) */
-.project-content {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  flex: 1 1 auto;
-  box-sizing: border-box;
-}
+    /* Content area (title, description, tech tags) */
+    .project-content {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        flex: 1 1 auto;
+        box-sizing: border-box;
+    }
 
-/* Title */
-.project-content h3 {
-  margin: 0;
-  font-size: 1.05rem;
-  line-height: 1.25;
-  color: white;
-  font-weight: 600;
-}
+    /* Title */
+    .project-content h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        line-height: 1.25;
+        color: white;
+        font-weight: 600;
+    }
 
-/* Description */
-.project-content p {
-  margin: 0;
-  color: #fff;
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
+    /* Description */
+    .project-content p {
+        margin: 0;
+        color: #fff;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
 
-/* Tech tags container */
-.project-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: auto; /* keep tags at the bottom if space allows */
-}
+    /* Tech tags container */
+    .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: auto;
+        /* keep tags at the bottom if space allows */
+    }
 
-/* Individual tag */
-.tech-tag {
-  display: inline-block;
-  padding: 0.28rem 0.55rem;
-  font-size: 0.78rem;
-  border-radius: 999px;
-  background: #eef2ff;
-  color: #3730a3;
-  border: 2px solid #10b981;
-  white-space: nowrap;
-}
+    /* Individual tag */
+    .tech-tag {
+        display: inline-block;
+        padding: 0.28rem 0.55rem;
+        font-size: 0.78rem;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #3730a3;
+        border: 2px solid #10b981;
+        white-space: nowrap;
+    }
 
-/* Responsive tweaks */
-@media (max-width: 520px) {
-  .project-image { height: 150px; }
-  .project-link { width: 40px; height: 40px; font-size: 14px; }
-  .project-content { padding: 0.9rem; }
-}
+    /* Responsive tweaks */
+    @media (max-width: 520px) {
+        .project-image {
+            height: 150px;
+        }
 
-/* Utility: empty / error states */
-.no-projects,
-.error {
-  color: #64748b;
-  text-align: center;
-  padding: 1.25rem;
-}
+        .project-link {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+        }
 
+        .project-content {
+            padding: 0.9rem;
+        }
+    }
+
+    /* Utility: empty / error states */
+    .no-projects,
+    .error {
+        color: #64748b;
+        text-align: center;
+        padding: 1.25rem;
+    }
 </style>
+
 <body>
     <!-- Animated Background -->
     <div class="animated-bg">
@@ -267,7 +283,7 @@
                         </div>
                     </h1>
                     <p class="hero-description">
-                        I craft digital experiences that blend creativity with cutting-edge technology. 
+                        I craft digital experiences that blend creativity with cutting-edge technology.
                         Specializing in full-stack development with a passion for clean code and innovative solutions.
                     </p>
                     <div class="hero-buttons">
@@ -275,33 +291,31 @@
                             <span>View My Work</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
-                        <a  href="./myCV.docx" id="downloadCV" class="btn btn-secondary">
+                        <a href="./myCV.docx" id="downloadCV" class="btn btn-secondary">
                             <i class="fas fa-download"></i>
                             <span>Download CV</span>
                         </a>
-                        
+
 
                     </div>
-                    <div class="toast position-fixed bottom-0 end-0 p-3 d-none"
-                        id="downloadToast"
-                        role="alert">
+                    <div class="toast position-fixed bottom-0 end-0 p-3 d-none" id="downloadToast" role="alert">
                         <div class="toast-body bg-success text-white">
                             CV download started successfully 📄
                         </div>
                     </div>
                     <script>
-                    const downloadBtn = document.getElementById("downloadCV");
-                    const toast = document.getElementById("downloadToast");
+                        const downloadBtn = document.getElementById("downloadCV");
+                        const toast = document.getElementById("downloadToast");
 
-                    downloadBtn.addEventListener("click", () => {
-                        // show toast
-                        toast.classList.add("show");
+                        downloadBtn.addEventListener("click", () => {
+                            // show toast
+                            toast.classList.add("show");
 
-                        // hide after 5 seconds
-                        setTimeout(() => {
-                            toast.classList.remove("show");
-                        }, 5000);
-                    });
+                            // hide after 5 seconds
+                            setTimeout(() => {
+                                toast.classList.remove("show");
+                            }, 5000);
+                        });
                     </script>
 
                     <div class="social-links">
@@ -369,14 +383,15 @@
                 <div class="about-text">
                     <div class="text-reveal">
                         <p>
-                            I'm a passionate full-stack developer with <span id="experience" class="experience-badge" data-start="2022">—</span> years of experience creating 
-                            digital solutions that make a difference. My journey began with curiosity 
-                            about how things work on the web, and it has evolved into a deep love for 
+                            I'm a passionate full-stack developer with <span id="experience" class="experience-badge"
+                                data-start="2022">—</span> years of experience creating
+                            digital solutions that make a difference. My journey began with curiosity
+                            about how things work on the web, and it has evolved into a deep love for
                             crafting exceptional user experiences.
                         </p>
                         <p>
-                            I specialize in modern web technologies including React, Node.js, PHP, 
-                            and cloud platforms. I believe in writing clean, maintainable code and 
+                            I specialize in modern web technologies including React, Node.js, PHP,
+                            and cloud platforms. I believe in writing clean, maintainable code and
                             staying up-to-date with the latest industry trends and best practices.
                         </p>
                     </div>
@@ -409,14 +424,14 @@
                             <div class="code-line">
                                 <span class="line-number">1</span>
                                 <span class="code-text">
-                                    <span class="keyword">const</span> 
+                                    <span class="keyword">const</span>
                                     <span class="variable">developer</span> = {
                                 </span>
                             </div>
                             <div class="code-line">
                                 <span class="line-number">2</span>
                                 <span class="code-text">
-                                    &nbsp;&nbsp;<span class="property">name</span>: 
+                                    &nbsp;&nbsp;<span class="property">name</span>:
                                     <span class="string">'_Dev Lee'</span>,
                                 </span>
                             </div>
@@ -424,7 +439,7 @@
                                 <span class="line-number">3</span>
                                 <span class="code-text">
                                     &nbsp;&nbsp;<span class="property">skills</span>: [
-                                    <span class="string">'React'</span>, 
+                                    <span class="string">'React'</span>,
                                     <span class="string">'Node.js'</span>
                                     <span class="string">'PHP'</span>],
                                 </span>
@@ -432,7 +447,7 @@
                             <div class="code-line">
                                 <span class="line-number">4</span>
                                 <span class="code-text">
-                                    &nbsp;&nbsp;<span class="property">passion</span>: 
+                                    &nbsp;&nbsp;<span class="property">passion</span>:
                                     <span class="string">'Creating amazing UX'</span>
                                 </span>
                             </div>
@@ -467,10 +482,10 @@
                                 <span>React</span>
                                 <div class="skill-level" data-level="95"></div>
                             </div>
-                            
-                             <div class="skill-item"> 
-                                 <div class="skill-icon"> 
-                                     <i class="fab fa-js"></i> 
+
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-js"></i>
                                 </div>
                                 <span>JavaScript</span>
                                 <div class="skill-level" data-level="90"></div>
@@ -501,7 +516,7 @@
                                 <span>Node.js</span>
                                 <div class="skill-level" data-level="92"></div>
                             </div>
-                            
+
                             <div class="skill-item">
                                 <div class="skill-icon">
                                     <i class="fas fa-database"></i>
@@ -522,11 +537,11 @@
                         <h3>Tools & Cloud</h3>
                         <div class="skill-items">
                             <!-- <div class="skill-item"> -->
-                                <!-- <div class="skill-icon"> -->
-                                    <!-- <i class="fab fa-aws"></i> -->
-                                <!-- </div> -->
-                                <!-- <span>AWS</span> -->
-                                <!-- <div class="skill-level" data-level="83"></div> -->
+                            <!-- <div class="skill-icon"> -->
+                            <!-- <i class="fab fa-aws"></i> -->
+                            <!-- </div> -->
+                            <!-- <span>AWS</span> -->
+                            <!-- <div class="skill-level" data-level="83"></div> -->
                             <!-- </div> -->
                             <div class="skill-item">
                                 <div class="skill-icon">
@@ -542,7 +557,7 @@
                                 <span>Git</span>
                                 <div class="skill-level" data-level="90"></div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -560,7 +575,7 @@
             </div>
             <div class="project-card" id="projects-container">
                 <!-- <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> -->
-                     <!-- Projects will be injected here -->
+                <!-- Projects will be injected here -->
                 <!-- </div> -->
 
 
@@ -568,8 +583,8 @@
                 <!-- Include Font Awesome for icons -->
                 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-                
-                
+
+
             </div>
         </div>
     </section>
@@ -586,7 +601,7 @@
                 <div class="contact-info">
                     <h3>Get In Touch</h3>
                     <p>
-                        I'm always interested in new opportunities and exciting projects. 
+                        I'm always interested in new opportunities and exciting projects.
                         Whether you have a question or just want to say hi, feel free to reach out!
                     </p>
                     <div class="contact-items">
@@ -620,41 +635,34 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form
-                        class="form"
-                        data-api-endpoint="https://portfolio.elitedestrading.com/v1/api/message-logic.php"
-                        >
-  <div class="form-group">
-    <input type="text" name="full_name" class="form-input" placeholder="Your Name" required>
-    <label class="form-label">Name</label>
-  </div>
+                    <form class="form"
+                        data-api-endpoint="https://portfolio.elitedestrading.com/v1/api/message-logic.php">
+                        <div class="form-group">
+                            <input type="text" name="full_name" class="form-input" placeholder="Your Name" required>
+                            <label class="form-label">Name</label>
+                        </div>
 
-  <div class="form-group">
-    <input type="email" name="email" class="form-input" placeholder="Your Email" required>
-    <label class="form-label">Email</label>
-  </div>
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-input" placeholder="Your Email" required>
+                            <label class="form-label">Email</label>
+                        </div>
 
-  <div class="form-group">
-    <input type="text" name="subject" class="form-input" placeholder="Subject">
-    <label class="form-label">Subject</label>
-  </div>
+                        <div class="form-group">
+                            <input type="text" name="subject" class="form-input" placeholder="Subject">
+                            <label class="form-label">Subject</label>
+                        </div>
 
-  <div class="form-group">
-    <textarea
-      name="details"
-      class="form-input"
-      placeholder="Your Message"
-      rows="5"
-      required
-    ></textarea>
-    <label class="form-label">Message</label>
-  </div>
+                        <div class="form-group">
+                            <textarea name="details" class="form-input" placeholder="Your Message" rows="5"
+                                required></textarea>
+                            <label class="form-label">Message</label>
+                        </div>
 
-  <button type="submit" class="btn btn-primary">
-    <span>Send Message</span>
-    <i class="fas fa-paper-plane"></i>
-  </button>
-</form>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
 
                 </div>
             </div>
@@ -666,7 +674,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-text">
-                    <p>&copy; 2024 _Dev Lee Chen. All rights reserved.</p>
+                    <p>&copy; <span id="year"></span> _Dev Lee Chen. All rights reserved.</p>
                 </div>
                 <div class="footer-social">
                     <a href="#" class="social-link">
@@ -688,7 +696,14 @@
 
     <script src="./script.js"></script>
     <script src="./fetch.js"></script>
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+
+    </script>
+
 
 </body>
+
 </html>
