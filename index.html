@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="./devlee.jpg"> ✅
+
 </head>
 <style>
     .toast {
@@ -618,28 +620,42 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form class="form"  data-api-endpoint="http://localhost/portfolioAdmin/v1/api/message-logic.php" data-api-content-type="json" data-api-credentials="false">
-                        <div class="form-group">
-                            <input type="text" class="form-input" placeholder="Your Name" required>
-                            <label class="form-label">Name</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-input" placeholder="Your Email" required>
-                            <label class="form-label">Email</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-input" placeholder="Subject" required>
-                            <label class="form-label">Subject</label>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-input" placeholder="Your Message" rows="5" required></textarea>
-                            <label class="form-label">Message</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span>Send Message</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
+                    <form
+                        class="form"
+                        data-api-endpoint="https://portfolio.elitedestrading.com/v1/api/message-logic.php"
+                        >
+  <div class="form-group">
+    <input type="text" name="full_name" class="form-input" placeholder="Your Name" required>
+    <label class="form-label">Name</label>
+  </div>
+
+  <div class="form-group">
+    <input type="email" name="email" class="form-input" placeholder="Your Email" required>
+    <label class="form-label">Email</label>
+  </div>
+
+  <div class="form-group">
+    <input type="text" name="subject" class="form-input" placeholder="Subject">
+    <label class="form-label">Subject</label>
+  </div>
+
+  <div class="form-group">
+    <textarea
+      name="details"
+      class="form-input"
+      placeholder="Your Message"
+      rows="5"
+      required
+    ></textarea>
+    <label class="form-label">Message</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    <span>Send Message</span>
+    <i class="fas fa-paper-plane"></i>
+  </button>
+</form>
+
                 </div>
             </div>
         </div>
@@ -672,114 +688,78 @@
 
     <script src="./script.js"></script>
     <script src="./fetch.js"></script>
-    <script>
-        (function () {
-  // Default API URL — replace with your API host if you don't use data-api-endpoint on the form
-  const defaultApiUrl = 'http://localhost/portfolioAdmin/v1/api/message-logic.php';
+    <!-- <script> -->
+<!-- document.addEventListener('DOMContentLoaded', () => { -->
+  <!-- const form = document.querySelector('.form'); -->
+  <!-- if (!form) return; -->
+<!--  -->
+  <!-- const apiUrl = form.dataset.apiEndpoint; -->
+<!--  -->
+  <!-- let statusEl = form.querySelector('.form-status'); -->
+  <!-- if (!statusEl) { -->
+    <!-- statusEl = document.createElement('div'); -->
+    <!-- statusEl.className = 'form-status'; -->
+    <!-- statusEl.setAttribute('aria-live', 'polite'); -->
+    <!-- statusEl.style.marginTop = '0.75rem'; -->
+    <!-- form.appendChild(statusEl); -->
+  <!-- } -->
+<!--  -->
+  <!-- const submitBtn = form.querySelector('button[type="submit"]'); -->
+<!--  -->
+  <!-- form.addEventListener('submit', async (e) => { -->
+    <!-- e.preventDefault(); -->
+    statusEl.textContent = '';
+    <!-- statusEl.style.color = ''; -->
+<!--  -->
+    <!-- const payload = { -->
+      <!-- full_name: form.full_name.value.trim(), -->
+      <!-- email: form.email.value.trim(), -->
+      <!-- subject: form.subject.value.trim(), -->
+      <!-- details: form.details.value.trim() -->
+    <!-- }; -->
+<!--  -->
+    <!-- // Client validation -->
+    <!-- if (!payload.full_name || !payload.email || !payload.details) { -->
+      <!-- statusEl.textContent = 'Please fill in name, email and message.'; -->
+      <!-- statusEl.style.color = 'crimson'; -->
+      <!-- return; -->
+    <!-- } -->
+<!--  -->
+    <!-- if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) { -->
+      <!-- statusEl.textContent = 'Please enter a valid email.'; -->
+      <!-- statusEl.style.color = 'crimson'; -->
+      <!-- return; -->
+    <!-- } -->
+<!--  -->
+    <!-- submitBtn.disabled = true; -->
+<!--  -->
+    <!-- try { -->
+      <!-- const res = await fetch(apiUrl, { -->
+        <!-- method: 'POST', -->
+        <!-- headers: { 'Content-Type': 'application/json' }, -->
+        <!-- body: JSON.stringify(payload) -->
+      <!-- }); -->
+<!--  -->
+      <!-- const json = await res.json(); -->
+<!--  -->
+      <!-- if (res.ok && json.status === 'success') { -->
+        <!-- statusEl.textContent = json.message || 'Message sent successfully.'; -->
+        <!-- statusEl.style.color = 'green'; -->
+        <!-- form.reset(); -->
+      <!-- } else { -->
+        <!-- statusEl.textContent = json.message || 'Failed to send message.'; -->
+        <!-- statusEl.style.color = 'crimson'; -->
+      <!-- } -->
+    <!-- } catch (err) { -->
+      <!-- console.error(err); -->
+      <!-- statusEl.textContent = 'Network error. Please try again.'; -->
+      <!-- statusEl.style.color = 'crimson'; -->
+    <!-- } finally { -->
+      <!-- submitBtn.disabled = false; -->
+    <!-- } -->
+  <!-- }); -->
+<!-- }); -->
+<!-- </script> -->
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('.form');
-    if (!form) return;
-
-    const apiUrl = form.dataset.apiEndpoint || defaultApiUrl;
-    const contentTypeMode = (form.dataset.apiContentType || 'json').toLowerCase(); // 'json' or 'form'
-    const useCredentials = form.dataset.apiCredentials === 'true'; // whether to send cookies
-
-    // status element (create if missing)
-    let statusEl = form.querySelector('.form-status');
-    if (!statusEl) {
-      statusEl = document.createElement('div');
-      statusEl.className = 'form-status';
-      statusEl.setAttribute('aria-live', 'polite');
-      statusEl.style.marginTop = '.75rem';
-      form.appendChild(statusEl);
-    }
-
-    const submitBtn = form.querySelector('button[type="submit"]');
-
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      statusEl.textContent = '';
-      statusEl.style.color = '';
-
-      // Grab inputs by their order in your markup (do NOT require name attributes)
-      const groups = Array.from(form.querySelectorAll('.form-group'));
-      const inputs = groups.map(g => g.querySelector('.form-input')).filter(Boolean);
-
-      // Map inputs to the API field names expected: full_name, email, subject, details
-      const payload = {
-        full_name: (inputs[0] && inputs[0].value || '').trim(),
-        email:      (inputs[1] && inputs[1].value || '').trim(),
-        subject:    (inputs[2] && inputs[2].value || '').trim(),
-        details:    (inputs[3] && inputs[3].value || '').trim()
-      };
-
-      // Basic client validation
-      if (!payload.full_name || !payload.email || !payload.details) {
-        statusEl.style.color = 'crimson';
-        statusEl.textContent = 'Please fill in name, email and message.';
-        return;
-      }
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(payload.email)) {
-        statusEl.style.color = 'crimson';
-        statusEl.textContent = 'Please enter a valid email.';
-        return;
-      }
-
-      if (submitBtn) submitBtn.disabled = true;
-
-      try {
-        let fetchOptions = {
-          method: 'POST',
-          headers: {},
-          credentials: useCredentials ? 'include' : 'omit'
-        };
-
-        if (contentTypeMode === 'form') {
-          const urlParams = new URLSearchParams();
-          urlParams.set('full_name', payload.full_name);
-          urlParams.set('email', payload.email);
-          urlParams.set('subject', payload.subject);
-          urlParams.set('details', payload.details);
-          fetchOptions.body = urlParams.toString();
-          fetchOptions.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-        } else {
-          // default: JSON
-          fetchOptions.body = JSON.stringify(payload);
-          fetchOptions.headers['Content-Type'] = 'application/json;charset=UTF-8';
-        }
-
-        const res = await fetch(apiUrl, fetchOptions);
-
-        // Try parse JSON response
-        let json;
-        const ct = res.headers.get('content-type') || '';
-        if (ct.indexOf('application/json') !== -1) {
-          json = await res.json();
-        } else {
-          const text = await res.text();
-          try { json = JSON.parse(text); } catch { json = { status: res.ok ? 'success' : 'error', message: text || res.statusText }; }
-        }
-
-        if (res.ok && json && json.status === 'success') {
-          statusEl.style.color = 'green';
-          statusEl.textContent = json.message || 'Message sent. Thank you!';
-          form.reset();
-        } else {
-          statusEl.style.color = 'crimson';
-          statusEl.textContent = (json && json.message) ? json.message : `Failed to send message. (${res.status})`;
-        }
-      } catch (err) {
-        console.error('Contact API error:', err);
-        statusEl.style.color = 'crimson';
-        statusEl.textContent = 'Network error. Please try again later.';
-      } finally {
-        if (submitBtn) submitBtn.disabled = false;
-      }
-    });
-  });
-})();
-    </script>
 </body>
 </html>
