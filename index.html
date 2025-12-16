@@ -688,78 +688,7 @@
 
     <script src="./script.js"></script>
     <script src="./fetch.js"></script>
-    <!-- <script> -->
-<!-- document.addEventListener('DOMContentLoaded', () => { -->
-  <!-- const form = document.querySelector('.form'); -->
-  <!-- if (!form) return; -->
-<!--  -->
-  <!-- const apiUrl = form.dataset.apiEndpoint; -->
-<!--  -->
-  <!-- let statusEl = form.querySelector('.form-status'); -->
-  <!-- if (!statusEl) { -->
-    <!-- statusEl = document.createElement('div'); -->
-    <!-- statusEl.className = 'form-status'; -->
-    <!-- statusEl.setAttribute('aria-live', 'polite'); -->
-    <!-- statusEl.style.marginTop = '0.75rem'; -->
-    <!-- form.appendChild(statusEl); -->
-  <!-- } -->
-<!--  -->
-  <!-- const submitBtn = form.querySelector('button[type="submit"]'); -->
-<!--  -->
-  <!-- form.addEventListener('submit', async (e) => { -->
-    <!-- e.preventDefault(); -->
-    statusEl.textContent = '';
-    <!-- statusEl.style.color = ''; -->
-<!--  -->
-    <!-- const payload = { -->
-      <!-- full_name: form.full_name.value.trim(), -->
-      <!-- email: form.email.value.trim(), -->
-      <!-- subject: form.subject.value.trim(), -->
-      <!-- details: form.details.value.trim() -->
-    <!-- }; -->
-<!--  -->
-    <!-- // Client validation -->
-    <!-- if (!payload.full_name || !payload.email || !payload.details) { -->
-      <!-- statusEl.textContent = 'Please fill in name, email and message.'; -->
-      <!-- statusEl.style.color = 'crimson'; -->
-      <!-- return; -->
-    <!-- } -->
-<!--  -->
-    <!-- if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) { -->
-      <!-- statusEl.textContent = 'Please enter a valid email.'; -->
-      <!-- statusEl.style.color = 'crimson'; -->
-      <!-- return; -->
-    <!-- } -->
-<!--  -->
-    <!-- submitBtn.disabled = true; -->
-<!--  -->
-    <!-- try { -->
-      <!-- const res = await fetch(apiUrl, { -->
-        <!-- method: 'POST', -->
-        <!-- headers: { 'Content-Type': 'application/json' }, -->
-        <!-- body: JSON.stringify(payload) -->
-      <!-- }); -->
-<!--  -->
-      <!-- const json = await res.json(); -->
-<!--  -->
-      <!-- if (res.ok && json.status === 'success') { -->
-        <!-- statusEl.textContent = json.message || 'Message sent successfully.'; -->
-        <!-- statusEl.style.color = 'green'; -->
-        <!-- form.reset(); -->
-      <!-- } else { -->
-        <!-- statusEl.textContent = json.message || 'Failed to send message.'; -->
-        <!-- statusEl.style.color = 'crimson'; -->
-      <!-- } -->
-    <!-- } catch (err) { -->
-      <!-- console.error(err); -->
-      <!-- statusEl.textContent = 'Network error. Please try again.'; -->
-      <!-- statusEl.style.color = 'crimson'; -->
-    <!-- } finally { -->
-      <!-- submitBtn.disabled = false; -->
-    <!-- } -->
-  <!-- }); -->
-<!-- }); -->
-<!-- </script> -->
+    
 
 </body>
 </html>
